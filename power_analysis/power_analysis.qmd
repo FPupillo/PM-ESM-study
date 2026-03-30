@@ -199,6 +199,7 @@ simulate_ild_pm <- function(
 
 *Power was evaluated across a range of sample sizes (from N=20 to N=220), by repeatedly simulating datasets, fitting the model, and calculating the proportion of replications in which each target parameter was detected. On each iteration, a target parameter was considered detected if the posterior probability of the effect being in the expected direction exceeded 0.95. Specifically, for positive directional hypotheses, detection was defined as the proportion of posterior draws greater than zero exceeding 0.95, and for negative directional hypotheses, detection was defined as the proportion of posterior draws less than zero exceeding 0.95.*
 
+## Running power analysis
 A code running the simulations and calculating the power is the following:
 
 ```{r}
@@ -400,11 +401,12 @@ power<-run_power_sim_glmm()
 write.csv(power, file = "power.csv")
 
 ```
-
+## output
 *The resulting power curves showed that power increased with sample size for all paths, but the mediator-to-outcome effects generally required larger samples than the direct effects and predictor-to-mediator effects.*
 
 ```{r}
 #| eval: true
+#| echo: false
 #| message: false
 #| warning: false
 #| include: true
