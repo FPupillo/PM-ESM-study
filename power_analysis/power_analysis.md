@@ -3,7 +3,10 @@
 
 - [<span class="toc-section-number">1</span> *Power
   Analysis*](#power-analysis)
-- [<span class="toc-section-number">2</span> ](#section)
+- [<span class="toc-section-number">2</span> Running power
+  analysis](#running-power-analysis)
+- [<span class="toc-section-number">3</span> output](#output)
+- [<span class="toc-section-number">4</span> ](#section)
 
 ## *Power Analysis*
 
@@ -219,73 +222,18 @@ posterior draws greater than zero exceeding 0.95, and for negative
 directional hypotheses, detection was defined as the proportion of
 posterior draws less than zero exceeding 0.95.*
 
+## Running power analysis
+
 A code running the simulations and calculating the power is the
 following:
+
+## output
 
 *The resulting power curves showed that power increased with sample size
 for all paths, but the mediator-to-outcome effects generally required
 larger samples than the direct effects and predictor-to-mediator
 effects.*
 
-``` r
-library(dplyr)
-library(tidyr)
-library(ggplot2)
-
-power_df <- read.csv("power.csv")
-
-# delete the "X" variable
-power_df<-power_df[!names(power_df) %in% "X",]
-
-# delete the sd
-sdvars<-grep("sd_", names(power_df))
-
-power_df<-power_df[, -sdvars]
-
-power_long <- power_df %>%
-  pivot_longer(
-    cols = -sample_size,
-    names_to = "parameter",
-    values_to = "power"
-  ) %>%
-  mutate( # rename parameters
-    parameter = recode(
-      parameter,
-      b_prospectivememory_offloading = "PM ~ Offloading",
-      b_prospectivememory_monitoring = "PM ~ Monitoring",
-      b_prospectivememory_stress = "PM ~ Stress",
-      b_prospectivememory_importance = "PM ~ Importance",
-      b_offloading_stress = "Offloading ~ Stress",
-      b_offloading_importance = "Offloading ~ Importance",
-      b_monitoring_stress = "Monitoring ~ Stress",
-      b_monitoring_importance = "Monitoring ~ Importance",
-      mediation_stress_on_offloading= "stress~offloading~PM" ,
-      mediation_imp_offloading=  "stress~offloading~PM" ,
-      mediation_stress_on_monintoring = "stress~monitoring~PM",
-     mediation_imp_on_monitoring =  "importance~monitoring~PM",
-    )
-  )
-
-p <- ggplot(power_long, aes(x = sample_size, y = power, color = parameter)) +
-  geom_line(linewidth = 1) +
-  geom_point(size = 2) +
-  geom_hline(yintercept = 0.80, linetype = "dashed") +
-  scale_y_continuous(limits = c(0, 1)) +
-  labs(
-    x = "Sample size",
-    y = "Power",
-    color = "Path",
-    title = "Power analysis results"
-  ) +
-  theme_minimal(base_size = 13)
-
-print(p)
-```
-
 ![](power_analysis_files/figure-commonmark/unnamed-chunk-3-1.png)
-
-``` r
-ggsave("power_plot_labeled.png", p, width = 10, height = 6, dpi = 300)
-```
 
 ## 
