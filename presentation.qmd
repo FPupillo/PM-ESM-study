@@ -44,33 +44,11 @@ lapply(packages, library, character.only = TRUE)
 
 ```
 
-## Original Path model
+##  Path model
 
-This it the original path model to be tested :
+The tested path model
+![Figure 1. Hypothesised path model](path_model.png)
 
-![Figure 1. Hypothesised path model](Originaldatensätze/image.png)
-
-## Extended model
-
-This model can be extended to accommodate partition of variance between- and within- participants:
-
-![Extended hypothesised path model](path_model_updated!/slide1.JPG)
-
-## Within-between partitioning
-
-![Extended hypothesised path model](path_model_updated!/slide2.JPG)
-
-## Effect of stress
-
-![Extended hypothesised path model](path_model_updated!/slide3.JPG)
-
-## Effect of business
-
-![Extended hypothesised path model](path_model_updated!/slide4.JPG)
-
-## Effect of Importance
-
-![Extended hypothesised path model](path_model_updated!/slide5.JPG)
 
 ```{r}
 # Import the data
@@ -247,24 +225,6 @@ for (var in c("between_stress", "between_business","between_task_monitoring", "b
 head(stress_int_red, 20)
 ```
 
-## Some particiants have more or less intention per day
-
-```{r}
-#| echo: false
-# delete nas
-stress_int_red_noNA<-stress_int_red[nchar(stress_int_red$intention)>0, ]
-
-count_cases<-stress_int_red_noNA %>%
-  group_by(ID, day) %>%
-  tally()
-
-print("Number of unique intentions per day")
-unique(count_cases$n)
-
-# there are sometimes 4 and 1 and 2
-print("Participants who reported 4 intentions in some days:")
-unique(count_cases$ID[count_cases$n==4])
-```
 
 ## Distributions
 
@@ -340,43 +300,7 @@ stress_time_model<-lmer(esm_day_stress_avg ~ day.c*agegroup.c + (day.c|ID),
 tab_model(stress_time_model)
 ```
 
-## Conditional effects of variables on PM
 
-Test the conditional effects of the variables on PM
-
-```{R}
-#| echo: true
-#| eval: false
-
-# predict PM by all the predictors
-PM_model<- glmer(esm_evening_intention_execution ~ 
-                   # within factors
-                   within_off_loading+
-                   within_importance +
-                   within_task_monitoring+
-                   within_business+
-                   within_stress+
-                   # between factors
-                   between_off_loading+
-                   between_importance+
-                   between_task_monitoring+
-                   between_business+
-                   between_stress+  
-                   # age
-                   agegroup.c +  
-                   # day number as covariate
-                   day.c+
-                   # random effects
-                   (1 within_off_loading+
-                      within_importance +
-                      within_task_monitoring+within_business+day.c| ID),
-                 data = stress_int_red, family = binomial,
-                 control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=100000)) 
-)
-
-
-
-```
 
 ## Results
 
@@ -391,7 +315,7 @@ vif(PM_model)
 summary(PM_model) 
 ```
 
-## SEM - path model. Generalized linear-mixed effect path model - bayesian estimation
+## Generalized linear-mixed effect path model - bayesian estimation
 
 ```{R}
 #| eval: false
@@ -466,7 +390,7 @@ priors <- c(
 )
 
 
-# fit thestress_int_red# fit the model
+# fit the model
 fit1 <- brm(
   PM_model+
     monitoring_model + 
@@ -478,7 +402,7 @@ fit1 <- brm(
   chains = 4, cores = 4,
   iter = 2000, 
   warmup = 1000
-  #,backend = "cmdstanr"  
+
 )
 ```
 
@@ -508,18 +432,81 @@ intercepts<-posterior_summary_sorted$Parameter[grep(pattern  = "_Intercept",x = 
 posterior_summary_sorted<-posterior_summary_sorted[!posterior_summary_sorted$Parameter
                                                    %in% intercepts, ]
 
+
+labels <- c(
+  "Offloading ~ Age group",
+  "Task monitoring ~ Stress (B) × Age group",
+  "Task monitoring ~ Age group",
+  "PM ~ Offloading (W) × Age group",
+  "PM ~ Importance (B) × Age group",
+  "Offloading ~ Stress (B)",
+  "PM ~ Business (B) × Age group",
+  "PM ~ Offloading (B) × Age group",
+  "Offloading ~ Business (W)",
+  "Offloading ~ Business (B)",
+  "Task monitoring ~ Business (W) × Age group",
+  "PM ~ Importance (W) × Age group",
+  "Offloading ~ Stress (B)",
+  "Task monitoring ~ Day",
+  "PM ~ Stress (B) × Age group",
+  "Offloading ~ Importance (W) × Age group",
+  "PM ~ Stress (W) × Age group",
+  "PM ~ Business (W) × Age group",
+  "PM ~ Stress (W)",
+  "Task monitoring ~ Stress (W) × Age group",
+  "Task monitoring ~ Business (B)",
+  "Task monitoring ~ Stress (W)",
+  "PM ~ Stress (B)",
+  "Offloading ~ Day",
+  "Task monitoring ~ Stress (B)",
+  "PM ~ Day",
+  "Task monitoring ~ Importance (W)",
+  "PM ~ Age group",
+  "PM ~ Business (B)",
+  "PM ~ Task monitoring (B) × Age group",
+  "Task monitoring ~ Importance (B) × Age group",
+  "PM ~ Task monitoring (W) × Age group",
+  "PM ~ Task monitoring (B)",
+  "PM ~ Task monitoring (W)",
+  "PM ~ Business (W)",
+  "Offloading ~ Business (W) × Age group",
+  "Offloading ~ Stress (W) × Age group",
+  "Task monitoring ~ Importance (W) × Age group",
+  "Offloading ~ Stress (W)",
+  "PM ~ Importance (B)",
+  "Task monitoring ~ Importance (B)",
+  "Task monitoring ~ Business (W)",
+  "PM ~ Offloading (B)",
+  "Offloading ~ Importance (W)",
+  "Offloading ~ Business (B) × Age group",
+  "PM ~ Importance (W)",
+  "Offloading ~ Importance (B) × Age group",
+  "PM ~ Offloading (W)",
+  "Offloading ~ Importance (B)"
+)
+
+
 ggplot(posterior_summary_sorted, aes(x = Parameter, y = Median)) +
   geom_point() +
   #geom_histogram()+
   geom_errorbar(aes(ymin = CI_low, ymax = CI_high), width = 0.2) +
+
+
+  # stat_halfeye(
+  #   aes(xmin = CI_low, xmax = CI_high),
+  #   alpha = 0.4
+  # ) +
   coord_flip() +
-  theme_minimal() +
+  theme_classic() +
   geom_hline(yintercept = 0, linetype = "dashed", color = "red", linewidth = 1)+
   labs(
     title = "Posterior Estimates (Sorted by Effect Size)",
     y = "Median Estimate (with 95% CI)",
     x = "Parameter"
-  )
+  ) +
+  
+ scale_x_discrete(labels = labels)
+
 
 
 
