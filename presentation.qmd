@@ -1,11 +1,14 @@
 ---
 title: "ESM_project"
 format:
-  gfm:
+  html:
     toc: true
-    number-sections: true
-    colorlinks: true
-editor: visual
+    code-fold: true
+    output-file: index.html
+execute:
+  echo: true
+  warnings: false
+  message: false
 ---
 
 ```{r includeLfalse}
@@ -26,8 +29,7 @@ editor: visual
 # library(bayestestR)
 # library("paraeters")
 
-
-packages <- c("brms", "dplyr", "haven", "gt", "lme4",
+packages <- c("brms", "dplyr", "haven", "gt", "lme4", "tidyr", #"ggdist",
               "performance", "sjPlot","ggplot2", "bayestestR",
               "rstudioapi", "parameters", "car","interactions" )
 
@@ -267,7 +269,6 @@ unique(count_cases$ID[count_cases$n==4])
 ## Distributions
 
 ```{r}
-library(tidyr)
 
 # Select the variables you want histograms for
 df_selected <- stress_int_red %>%
@@ -520,7 +521,6 @@ ggplot(posterior_summary_sorted, aes(x = Parameter, y = Median)) +
     x = "Parameter"
   )
 
-library(ggdist)  # for stat_halfeye
 
 
 #bf
@@ -637,7 +637,6 @@ interact_plot(int_mod_stress_mon, pred = esm_day_stress, modx = agegroup)
 ## Plot moderation of Age group on between stress-within task monitoring path
 
 ```{R}
-library(interactions)
 interact_plot(int_mod_stess_mon, pred = between_stress, modx = agegroup)
 ```
 

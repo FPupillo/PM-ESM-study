@@ -1,0 +1,226 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "ESM_project",
+    "section": "",
+    "text": "This it the original path model to be tested :\n\n\n\nFigure 1. Hypothesised path model"
+  },
+  {
+    "objectID": "index.html#original-path-model",
+    "href": "index.html#original-path-model",
+    "title": "ESM_project",
+    "section": "",
+    "text": "This it the original path model to be tested :\n\n\n\nFigure 1. Hypothesised path model"
+  },
+  {
+    "objectID": "index.html#extended-model",
+    "href": "index.html#extended-model",
+    "title": "ESM_project",
+    "section": "Extended model",
+    "text": "Extended model\nThis model can be extended to accommodate partition of variance between- and within- participants:\n\n\n\nExtended hypothesised path model"
+  },
+  {
+    "objectID": "index.html#within-between-partitioning",
+    "href": "index.html#within-between-partitioning",
+    "title": "ESM_project",
+    "section": "Within-between partitioning",
+    "text": "Within-between partitioning\n\n\n\nExtended hypothesised path model"
+  },
+  {
+    "objectID": "index.html#effect-of-stress",
+    "href": "index.html#effect-of-stress",
+    "title": "ESM_project",
+    "section": "Effect of stress",
+    "text": "Effect of stress\n\n\n\nExtended hypothesised path model"
+  },
+  {
+    "objectID": "index.html#effect-of-business",
+    "href": "index.html#effect-of-business",
+    "title": "ESM_project",
+    "section": "Effect of business",
+    "text": "Effect of business\n\n\n\nExtended hypothesised path model"
+  },
+  {
+    "objectID": "index.html#effect-of-importance",
+    "href": "index.html#effect-of-importance",
+    "title": "ESM_project",
+    "section": "Effect of Importance",
+    "text": "Effect of Importance\n\n\n\nExtended hypothesised path model\n\n\n\n\nCode\n# Import the data\n#| include: false\n#| message: false\n#| warning: false\n#| echo: false\ncd&lt;-getwd()\n\n# file dir\nfile_dir&lt;-\"Originaldatensätze/R-Skript\"\n\n# young adults' dataset\nYA_df&lt;- read_spss(paste0(file_dir, \"/ExpSamp_jungErw2.sav\"))\n\n# rename the age group\nYA_df$agegroup&lt;-\"YA\"\n\n# check task_monitoring\nhist(YA_df$esm_day_task_monitoring)\n\n\n\n\n\n\n\n\n\nCode\n# middle-aged adults\nMAA_df&lt;-read_spss(paste0(file_dir, \"/ExpSamp_mittlErw.sav\"))\n\n# rename the age group\nMAA_df$agegroup&lt;-\"MAA\"\n\n# check task_monitoring\nhist(YA_df$esm_day_task_monitoring)\n\n# combine the two\nall_df&lt;-rbind(YA_df, MAA_df)"
+  },
+  {
+    "objectID": "index.html#participants",
+    "href": "index.html#participants",
+    "title": "ESM_project",
+    "section": "Participants",
+    "text": "Participants\n\n\nCode\nall_df %&gt;%\n  distinct(ID, agegroup) %&gt;%\n  count(agegroup, name = \"n_participants\") %&gt;%\n  gt() %&gt;%\n  tab_header(\n    title = \"Participants by age group\"\n  )\n\n\n\n\n\n\n\n\nParticipants by age group\n\n\nagegroup\nn_participants\n\n\n\n\nMAA\n103\n\n\nYA\n107\n\n\n\n\n\n\n\nCode\n# check the length of unique IDs\nlength(unique(all_df$ID))\n\n\n[1] 210"
+  },
+  {
+    "objectID": "index.html#section",
+    "href": "index.html#section",
+    "title": "ESM_project",
+    "section": "",
+    "text": "the df looks like this:\n\n\n# A tibble: 20 × 15\n   ID         day  time intention                esm_day_stress esm_day_business\n   &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;                             &lt;dbl&gt;            &lt;dbl&gt;\n 1 AM05UN20     1     1 Brief abgeben                         3                2\n 2 AM05UN20     1     2 Brief abgeben                         4                3\n 3 AM05UN20     1     3 Brief abgeben                         4                5\n 4 AM05UN20     1     4 Brief abgeben                         4                4\n 5 AM05UN20     1     5 Brief abgeben                        NA               NA\n 6 AM05UN20     1     1 Präsentation fertigstel…              3                2\n 7 AM05UN20     1     2 Präsentation fertigstel…              4                3\n 8 AM05UN20     1     3 Präsentation fertigstel…              4                5\n 9 AM05UN20     1     4 Präsentation fertigstel…              4                4\n10 AM05UN20     1     5 Präsentation fertigstel…             NA               NA\n11 AM05UN20     1     1 Geschwister treffen                   3                2\n12 AM05UN20     1     2 Geschwister treffen                   4                3\n13 AM05UN20     1     3 Geschwister treffen                   4                5\n14 AM05UN20     1     4 Geschwister treffen                   4                4\n15 AM05UN20     1     5 Geschwister treffen                  NA               NA\n16 AM05UN20     2     1 Kaffe trinken gehen                   2                2\n17 AM05UN20     2     2 Kaffe trinken gehen                   2                3\n18 AM05UN20     2     3 Kaffe trinken gehen                   4                4\n19 AM05UN20     2     4 Kaffe trinken gehen                   5                5\n20 AM05UN20     2     5 Kaffe trinken gehen                   5                5\n# ℹ 9 more variables: esm_day_task_monitoring &lt;dbl&gt;, esm_day_stress_avg &lt;dbl&gt;,\n#   esm_daybusiness_avg &lt;dbl&gt;, esm_day_task_monitoring_avg &lt;dbl&gt;,\n#   esm_evening_intention_importance_t1 &lt;dbl&gt;, esm_evening_off_loading &lt;dbl&gt;,\n#   esm_evening_intention_execution &lt;dbl&gt;, age_group &lt;dbl&gt;, agegroup &lt;chr&gt;"
+  },
+  {
+    "objectID": "index.html#preprocessing",
+    "href": "index.html#preprocessing",
+    "title": "ESM_project",
+    "section": "Preprocessing",
+    "text": "Preprocessing\n\nRescale PM to range between 0 and 1\n\n\n\nCode\nall_df$esm_evening_intention_execution&lt;-ifelse(all_df$esm_evening_intention_execution ==-1, 0, all_df$esm_evening_intention_execution)"
+  },
+  {
+    "objectID": "index.html#monitoring",
+    "href": "index.html#monitoring",
+    "title": "ESM_project",
+    "section": "Monitoring",
+    "text": "Monitoring\n\n\nCode\nhist(all_df$esm_day_task_monitoring)\n\n\n\n\n\n\n\n\n\nCode\n# all_df$esm_day_task_monitoring_r&lt;-ifelse(all_df$esm_day_task_monitoring ==-1, 0, \n#                                          ifelse(all_df$esm_day_task_monitoring== 0, 0, 1))"
+  },
+  {
+    "objectID": "index.html#rescale-offloading",
+    "href": "index.html#rescale-offloading",
+    "title": "ESM_project",
+    "section": "Rescale offloading",
+    "text": "Rescale offloading\n\n\nCode\nhist(all_df$esm_evening_off_loading)\n\n\n\n\n\n\n\n\n\nCode\nall_df$esm_evening_off_loading_r&lt;-ifelse(all_df$esm_evening_off_loading ==-1, 0,1)\n\nhist(all_df$esm_evening_off_loading_r)"
+  },
+  {
+    "objectID": "index.html#reshaping",
+    "href": "index.html#reshaping",
+    "title": "ESM_project",
+    "section": "Reshaping",
+    "text": "Reshaping\n\nThe dataset as it is now is good to test hypotheses on the variables that vary within day, e.g. stress, business, monitoring.\nReshape the dataset so there is only one unique intention per day, which is our base level.\n\nRTeshaped dataset\n\n\n`summarise()` has regrouped the output.\nℹ Summaries were computed grouped by ID and day.\nℹ Output is grouped by ID.\nℹ Use `summarise(.groups = \"drop_last\")` to silence this message.\nℹ Use `summarise(.by = c(ID, day))` for per-operation grouping\n  (`?dplyr::dplyr_by`) instead.\n\n\n# A tibble: 20 × 43\n# Groups:   ID, day, intention [20]\n   ID         day  time intention                esm_day_stress esm_day_business\n   &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;                             &lt;dbl&gt;            &lt;dbl&gt;\n 1 AM05UN20     1     3 Brief abgeben                         4                5\n 2 AM05UN20     1     5 Geschwister treffen                  NA               NA\n 3 AM05UN20     1     5 Präsentation fertigstel…             NA               NA\n 4 AM05UN20     2     5 Freund besuchen                       5                5\n 5 AM05UN20     2     5 Kaffe trinken gehen                   5                5\n 6 AM05UN20     2     5 telefonieren                          5                5\n 7 AM05UN20     3     2 Präsentation fertigstel…              3                2\n 8 AM05UN20     3     5 aufräumen                             4                5\n 9 AM05UN20     3     3 mit Freundin spielen                  4                5\n10 AM05UN20     4     5 13 Uhr zum Geburtstag g…              3                2\n11 AM05UN20     4     1 mit guter Laune aufsteh…              3                4\n12 AM05UN20     4     1 nicht einschüchtern las…              3                4\n13 AM05UN20     5     5 18 Uhr bereitmachen für…              3                4\n14 AM05UN20     5     2 Motivation zeigen                     3                4\n15 AM05UN20     5     3 ausschlafen                           4                5\n16 AM05UN20     6     1 Praktikumsplatz suchen                2                4\n17 AM05UN20     6     4 Präsentation fertigstel…              5                4\n18 AM05UN20     6     3 mit Freunden treffen                  4                4\n19 AM05UN20     7     5 Präsentation fertigstel…              2                3\n20 AM05UN20     7     4 meinem Freund eine Freu…              4                3\n# ℹ 37 more variables: esm_day_task_monitoring &lt;dbl&gt;, esm_day_stress_avg &lt;dbl&gt;,\n#   esm_daybusiness_avg &lt;dbl&gt;, esm_day_task_monitoring_avg &lt;dbl&gt;,\n#   esm_evening_intention_importance_t1 &lt;dbl&gt;, esm_evening_off_loading &lt;dbl&gt;,\n#   esm_evening_intention_execution &lt;dbl&gt;, age_group &lt;dbl&gt;, agegroup &lt;chr&gt;,\n#   esm_evening_off_loading_r &lt;dbl&gt;, mean_stress &lt;dbl&gt;, mean_business &lt;dbl&gt;,\n#   grand_mean_esm_stress &lt;dbl&gt;, grand_sd_esm_stress &lt;dbl&gt;,\n#   grand_mean_esm_day_business &lt;dbl&gt;, grand_sd_esm_day_business &lt;dbl&gt;, …"
+  },
+  {
+    "objectID": "index.html#some-particiants-have-more-or-less-intention-per-day",
+    "href": "index.html#some-particiants-have-more-or-less-intention-per-day",
+    "title": "ESM_project",
+    "section": "Some particiants have more or less intention per day",
+    "text": "Some particiants have more or less intention per day\n\n\n[1] \"Number of unique intentions per day\"\n\n\n[1] 3 4 2 1\n\n\n[1] \"Participants who reported 4 intentions in some days:\"\n\n\n [1] \"CH09LD19\" \"EK13AN09\" \"EL05AN19\" \"EL08TZ04\" \"EL09ST09\" \"ER06AH19\"\n [7] \"ER06SA06\" \"ER08IG13\" \"ER09AN17\" \"ER11RD06\" \"GG06ER28\" \"IA10CO01\"\n[13] \"IA10CO06\" \"KE06RD04\" \"LE05GI03\" \"LE05GI07\" \"LO08ZO13\" \"LU03IR19\"\n[19] \"LU17UZ09\" \"be08rd25\""
+  },
+  {
+    "objectID": "index.html#distributions",
+    "href": "index.html#distributions",
+    "title": "ESM_project",
+    "section": "Distributions",
+    "text": "Distributions\n\n\nCode\n# Select the variables you want histograms for\ndf_selected &lt;- stress_int_red %&gt;%\n  select(within_stress, within_importance, within_business, \n         within_off_loading, within_task_monitoring, \n         esm_evening_intention_execution,esm_day_task_monitoring,esm_evening_off_loading_r )  \n\n\nAdding missing grouping variables: `ID`, `day`, `intention`\n\n\nCode\ndf_selected&lt;-df_selected[, c(\"within_stress\", \"within_importance\", \"within_business\", \n                             \"within_off_loading\", \"within_task_monitoring\", \n                             \"esm_evening_intention_execution\", \"esm_day_task_monitoring\", \n                             \"esm_evening_off_loading_r\")]\n\n# Convert to long format\ndf_long &lt;- df_selected %&gt;%\n  pivot_longer(cols = everything(), names_to = \"Variable\", values_to = \"Value\")\n\n# Plot all histograms in one go using facets\nggplot(df_long, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"grey70\", color = \"black\") +\n  facet_wrap(~ Variable, scales = \"free\") +\n  theme_classic()\n\n\nWarning: Removed 1994 rows containing non-finite outside the scale range\n(`stat_bin()`)."
+  },
+  {
+    "objectID": "index.html#check-the-intraclass-correlation-coefficient-icc",
+    "href": "index.html#check-the-intraclass-correlation-coefficient-icc",
+    "title": "ESM_project",
+    "section": "Check the intraclass correlation coefficient (ICC)",
+    "text": "Check the intraclass correlation coefficient (ICC)\n\n\nCode\nPM_YA &lt;- glmer(esm_evening_intention_execution ~ 1 + (1 | ID), \n               data = stress_int[stress_int$agegroup==\"YA\",], family = binomial)\n\nPM_MAA &lt;- glmer(esm_evening_intention_execution ~ 1 + (1 | ID), \n                data = stress_int[stress_int$agegroup==\"MAA\",], family = binomial)\n\nprint(\"ICC PM YA:\")\n\n\n[1] \"ICC PM YA:\"\n\n\nCode\nicc_YA&lt;-icc(PM_YA)\nicc_YA$ICC_adjusted\n\n\n[1] 0.133221\n\n\nCode\nprint(\"ICC PM MAA:\")\n\n\n[1] \"ICC PM MAA:\"\n\n\nCode\nicc_MAA&lt;-icc(PM_MAA)\nicc_MAA$ICC_adjusted\n\n\n[1] 0.1889963"
+  },
+  {
+    "objectID": "index.html#test-the-effect-of-day-on-intention-execution",
+    "href": "index.html#test-the-effect-of-day-on-intention-execution",
+    "title": "ESM_project",
+    "section": "Test the effect of day on intention execution",
+    "text": "Test the effect of day on intention execution\n\n\n\n\n \nesm_evening_intention_execution\n\n\nPredictors\nOdds Ratios\nCI\np\n\n\n(Intercept)\n2.93\n2.65 – 3.25\n&lt;0.001\n\n\nday c\n1.02\n1.00 – 1.03\n0.033\n\n\nagegroup c\n1.47\n1.20 – 1.79\n&lt;0.001\n\n\nday c × agegroup c\n0.99\n0.97 – 1.02\n0.533\n\n\nRandom Effects\n\n\n\nσ2\n3.29\n\n\n\nτ00 ID\n0.42\n\n\nτ11 ID.day.c\n0.00\n\n\nρ01 ID\n0.07\n\n\nICC\n0.12\n\n\nN ID\n210\n\nObservations\n8625\n\n\nMarginal R2 / Conditional R2\n0.011 / 0.127"
+  },
+  {
+    "objectID": "index.html#do-people-become-more-stressed-as-the-go-on-with-the-study",
+    "href": "index.html#do-people-become-more-stressed-as-the-go-on-with-the-study",
+    "title": "ESM_project",
+    "section": "Do people become more stressed as the go on with the study?",
+    "text": "Do people become more stressed as the go on with the study?\n\n\nCode\nstress_time_model&lt;-lmer(esm_day_stress_avg ~ day.c*agegroup.c + (day.c|ID), \n                        data = stress_int_red, \n                        control=lmerControl(optimizer=\"bobyqa\",optCtrl=list(maxfun=100000)) )\n\ntab_model(stress_time_model)\n\n\n\n\n \nesm_day_stress_avg\n\n\nPredictors\nEstimates\nCI\np\n\n\n(Intercept)\n2.44\n2.37 – 2.52\n&lt;0.001\n\n\nday c\n0.01\n0.01 – 0.02\n0.001\n\n\nagegroup c\n-0.01\n-0.16 – 0.14\n0.867\n\n\nday c × agegroup c\n-0.01\n-0.02 – 0.01\n0.288\n\n\nRandom Effects\n\n\n\nσ2\n0.35\n\n\n\nτ00 ID\n0.29\n\n\nτ11 ID.day.c\n0.00\n\n\nρ01 ID\n0.03\n\n\nICC\n0.49\n\n\nN ID\n210\n\nObservations\n8621\n\n\nMarginal R2 / Conditional R2\n0.004 / 0.492"
+  },
+  {
+    "objectID": "index.html#conditional-effects-of-variables-on-pm",
+    "href": "index.html#conditional-effects-of-variables-on-pm",
+    "title": "ESM_project",
+    "section": "Conditional effects of variables on PM",
+    "text": "Conditional effects of variables on PM\nTest the conditional effects of the variables on PM\n\n\nCode\n# predict PM by all the predictors\nPM_model&lt;- glmer(esm_evening_intention_execution ~ \n                   # within factors\n                   within_off_loading+\n                   within_importance +\n                   within_task_monitoring+\n                   within_business+\n                   within_stress+\n                   # between factors\n                   between_off_loading+\n                   between_importance+\n                   between_task_monitoring+\n                   between_business+\n                   between_stress+  \n                   # age\n                   agegroup.c +  \n                   # day number as covariate\n                   day.c+\n                   # random effects\n                   (1 within_off_loading+\n                      within_importance +\n                      within_task_monitoring+within_business+day.c| ID),\n                 data = stress_int_red, family = binomial,\n                 control=glmerControl(optimizer=\"bobyqa\",optCtrl=list(maxfun=100000)) \n)"
+  },
+  {
+    "objectID": "index.html#results",
+    "href": "index.html#results",
+    "title": "ESM_project",
+    "section": "Results",
+    "text": "Results"
+  },
+  {
+    "objectID": "index.html#sem---path-model.-generalized-linear-mixed-effect-path-model---bayesian-estimation",
+    "href": "index.html#sem---path-model.-generalized-linear-mixed-effect-path-model---bayesian-estimation",
+    "title": "ESM_project",
+    "section": "SEM - path model. Generalized linear-mixed effect path model - bayesian estimation",
+    "text": "SEM - path model. Generalized linear-mixed effect path model - bayesian estimation\n\n\nCode\n# first, we predict PM from all the predictors\nPM_model &lt;-bf(esm_evening_intention_execution ~  # fixed effects \n                within_stress*agegroup.c + \n                within_importance*agegroup.c + \n                within_task_monitoring*agegroup.c + \n                within_off_loading*agegroup.c +\n                within_business*agegroup.c+\n                between_stress*agegroup.c + \n                between_task_monitoring*agegroup.c + \n                between_off_loading*agegroup.c +\n                between_importance*agegroup.c+\n                between_business*agegroup.c+day.c+\n                (1 + within_stress +\n                   within_business+\n                   within_importance + \n                   within_task_monitoring + \n                   within_off_loading || ID), # random intercepts and slopes\n              family = bernoulli()) # we have a binary outcome\n\n# predicting monitoring from stress and importance\nmonitoring_model&lt;- bf(esm_day_task_monitoring ~ \n                        within_stress*agegroup.c +\n                        within_importance*agegroup.c +\n                        within_business*agegroup.c+\n                        between_stress*agegroup.c+\n                        between_importance*agegroup.c+\n                        between_business+day.c+\n                        (1+within_stress+\n                           within_business+\n                           within_importance+\n                           day.c||ID), \n                      family = bernoulli()) # mixture\n\n# predicing off_loading from stress and imortance\noffloading_model&lt;-bf(esm_evening_off_loading_r ~ \n                       within_stress*agegroup.c +\n                       within_importance*agegroup.c+\n                       within_business*agegroup.c+\n                       between_stress*agegroup.c+\n                       between_importance*agegroup.c+\n                       between_business*agegroup.c+ day.c+\n                       (1+within_stress+\n                          within_importance+\n                          within_business+\n                          day.c||ID), family = bernoulli() )#\n\n# set weakly informative priors\npriors &lt;- c(\n  # Fixed effects: assume standardized predictors\n  prior(normal(0, 0.5), class = \"b\", resp = \"esmeveningintentionexecution\"),   \n  prior(normal(0, 0.5), class = \"b\", resp = \"esmdaytaskmonitoring\"),  \n  prior(normal(0, 0.5), class = \"b\", resp = \"esmeveningoffloadingr\")   \n  \n# all the rest is left as defauls\n #  \n #  # SD of random effects (hierarchical structure)\n #   prior( student_t(3, 0, 2.5) , class = \"sd\", resp = \"esmeveningintentionexecution\"),\n #  prior(student_t(3, 0, 2.5) , class = \"sd\", resp = \"esmdaytaskmonitoring\"),\n #   prior(student_t(3, 0, 2.5), class = \"sd\", resp = \"esmeveningoffloadingr\"),\n #  #\n #  # Correlation priors among random effects\n # # prior(lkj(2), class = \"cor\"),  # same across responses\n # \n #  # Residual SDs for continuous outcomes\n #  prior(exponential(1), class = \"sigma\", resp = \"esmdaytaskmonitoring\"),\n #  prior(exponential(1), class = \"sigma\", resp = \"esmeveningoffloadingr\")\n)\n\n\n# fit thestress_int_red# fit the model\nfit1 &lt;- brm(\n  PM_model+\n    monitoring_model + \n    offloading_model + \n    set_rescor(F), \n  prior = priors,\n  sample_prior = \"yes\",\n  data = stress_int_red,\n  chains = 4, cores = 4,\n  iter = 2000, \n  warmup = 1000\n  #,backend = \"cmdstanr\"  \n)"
+  },
+  {
+    "objectID": "index.html#posterior-summary",
+    "href": "index.html#posterior-summary",
+    "title": "ESM_project",
+    "section": "Posterior summary",
+    "text": "Posterior summary"
+  },
+  {
+    "objectID": "index.html#path-model-results",
+    "href": "index.html#path-model-results",
+    "title": "ESM_project",
+    "section": "Path model results",
+    "text": "Path model results\n\n\n\nExtended hypothesised path model"
+  },
+  {
+    "objectID": "index.html#moderation-of-age-group-on-between-stress-within-task-monitoring-path",
+    "href": "index.html#moderation-of-age-group-on-between-stress-within-task-monitoring-path",
+    "title": "ESM_project",
+    "section": "Moderation of Age group on between stress-within task monitoring path",
+    "text": "Moderation of Age group on between stress-within task monitoring path\n\n\nCode\nint_mod_stess_mon&lt;-glmer(esm_day_task_monitoring~between_stress*agegroup +(1|ID),\n               family = binomial(),\n               data = stress_int_red, )\n\n\ntab_model(int_mod_stess_mon)\n\n\n\n\n \nesm_day_task_monitoring\n\n\nPredictors\nOdds Ratios\nCI\np\n\n\n(Intercept)\n0.59\n0.49 – 0.71\n&lt;0.001\n\n\nbetween stress\n0.69\n0.58 – 0.83\n&lt;0.001\n\n\nagegroup [YA]\n1.09\n0.83 – 1.42\n0.536\n\n\nbetween stress × agegroup[YA]\n2.08\n1.57 – 2.76\n&lt;0.001\n\n\nRandom Effects\n\n\n\nσ2\n3.29\n\n\n\nτ00 ID\n0.82\n\n\nICC\n0.20\n\n\nN ID\n210\n\nObservations\n8171\n\n\nMarginal R2 / Conditional R2\n0.032 / 0.225\n\n\n\n\n\nCode\nint_mod_stress_mon&lt;-glmer(esm_day_task_monitoring~day.c+ esm_day_stress*agegroup +(1+day.c+esm_day_stress|ID),\n               family = binomial(),\n               data = stress_int_red )\n\n\nboundary (singular) fit: see help('isSingular')\n\n\nCode\ntab_model(int_mod_stress_mon)\n\n\n\n\n \nesm_day_task_monitoring\n\n\nPredictors\nOdds Ratios\nCI\np\n\n\n(Intercept)\n0.52\n0.40 – 0.68\n&lt;0.001\n\n\nday c\n0.93\n0.92 – 0.94\n&lt;0.001\n\n\nesm day stress\n1.06\n0.97 – 1.17\n0.194\n\n\nagegroup [YA]\n0.48\n0.34 – 0.69\n&lt;0.001\n\n\nesm day stress × agegroup[YA]\n1.36\n1.19 – 1.55\n&lt;0.001\n\n\nRandom Effects\n\n\n\nσ2\n3.29\n\n\n\nτ00 ID\n0.96\n\n\nτ11 ID.day.c\n0.00\n\n\nτ11 ID.esm_day_stress\n0.11\n\n\nρ01\n1.00\n\n\n\n-0.45\n\n\nN ID\n210\n\nObservations\n8171\n\n\nMarginal R2 / Conditional R2\n0.049 / NA\n\n\n\n\n\nCode\ninteract_plot(int_mod_stress_mon, pred = esm_day_stress, modx = agegroup)\n\n\n\n\n\n\n\n\n\nCode\n ggplot(stress_int_red, \n         aes( x=esm_day_stress, y=esm_day_task_monitoring))+\n  # add the \"smooth\" line, which the regression method ('l,')\n  # and trasparent (0.5)\n    geom_line(stat=\"smooth\",method = \"glm\", formula=y~x, alpha=0.5, se=F)+\n\n  # specify that we want different colours for different participants\n    aes(colour = factor(ID))+\n  # add the summary line with geom_smooth\n    geom_smooth(method=\"lm\",formula=y~x, se=T, colour = \"black\" )+\n    theme(strip.text.x = element_text(size = 13))+\n    theme_classic()+\n    theme(panel.spacing = unit(1, \"lines\"))+\n    facet_wrap(.~agegroup)+\n    #ggtitle(\"Experiment 2\")+\n    theme(legend.position = \"none\")\n\n\nWarning: Removed 635 rows containing non-finite outside the scale range\n(`stat_smooth()`).\nRemoved 635 rows containing non-finite outside the scale range\n(`stat_smooth()`)."
+  },
+  {
+    "objectID": "index.html#plot-moderation-of-age-group-on-between-stress-within-task-monitoring-path",
+    "href": "index.html#plot-moderation-of-age-group-on-between-stress-within-task-monitoring-path",
+    "title": "ESM_project",
+    "section": "Plot moderation of Age group on between stress-within task monitoring path",
+    "text": "Plot moderation of Age group on between stress-within task monitoring path\n\n\nCode\ninteract_plot(int_mod_stess_mon, pred = between_stress, modx = agegroup)"
+  },
+  {
+    "objectID": "index.html#test-the-mediation-of-monitoring",
+    "href": "index.html#test-the-mediation-of-monitoring",
+    "title": "ESM_project",
+    "section": "Test the mediation of monitoring",
+    "text": "Test the mediation of monitoring\n\n\nCode\nh_business_monitoring&lt;-hypothesis(fit1,  c(\"esmeveningintentionexecution_within_task_monitoring*esmdaytaskmonitoring_within_business =0\"  ))\n\nplot(h_business_monitoring)\n\n\n\n\n\n\n\n\n\nCode\nprint(h_business_monitoring)\n\n\nHypothesis Tests for class b:\n                Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio\n1 (esmeveningintent... = 0     0.02      0.01     0.01     0.03       0.18\n  Post.Prob Star\n1      0.15    *\n---\n'CI': 90%-CI for one-sided and 95%-CI for two-sided hypotheses.\n'*': For one-sided hypotheses, the posterior probability exceeds 95%;\nfor two-sided hypotheses, the value tested against lies outside the 95%-CI.\nPosterior probabilities of point hypotheses assume equal prior probabilities.\n\n\nCode\nprint(paste0(\"Bayes Factor for \", \"h_mediation\",\" is \", 1/h_business_monitoring$hypothesis$Evid.Ratio))\n\n\n[1] \"Bayes Factor for h_mediation is 5.53729940133829\""
+  },
+  {
+    "objectID": "index.html#test-moderated-mediation---age-as-moderator-off-loading-as-a-mediator",
+    "href": "index.html#test-moderated-mediation---age-as-moderator-off-loading-as-a-mediator",
+    "title": "ESM_project",
+    "section": "Test moderated mediation - Age as moderator, off-loading as a mediator",
+    "text": "Test moderated mediation - Age as moderator, off-loading as a mediator\n\n\nCode\nh_moderated_mediation&lt;-hypothesis(fit1,  c(\"esmeveningintentionexecution_agegroup.c:within_off_loading* esmeveningoffloadingr_within_importance = 0\"  ))\n\nBF_moderated_med&lt;-1/h_moderated_mediation$hypothesis$Evid.Ratio\nprint(paste0(\"Bayes Factor for \", \"h_moderated_mediation\",\" is \", 1/h_moderated_mediation$hypothesis$Evid.Ratio))"
+  },
+  {
+    "objectID": "index.html#moderation-model",
+    "href": "index.html#moderation-model",
+    "title": "ESM_project",
+    "section": "Moderation model",
+    "text": "Moderation model\n\n\nGeneralized linear mixed model fit by maximum likelihood (Laplace\n  Approximation) [glmerMod]\n Family: binomial  ( logit )\nFormula: esm_evening_intention_execution ~ within_off_loading * agegroup +  \n    (within_off_loading | ID)\n   Data: stress_int_red\n\n      AIC       BIC    logLik -2*log(L)  df.resid \n   9571.4    9620.9   -4778.7    9557.4      8619 \n\nScaled residuals: \n    Min      1Q  Median      3Q     Max \n-3.6160 -0.9707  0.4621  0.6220  2.0074 \n\nRandom effects:\n Groups Name               Variance Std.Dev. Corr  \n ID     (Intercept)        0.43320  0.6582         \n        within_off_loading 0.06023  0.2454   -0.42 \nNumber of obs: 8626, groups:  ID, 210\n\nFixed effects:\n                              Estimate Std. Error z value Pr(&gt;|z|)    \n(Intercept)                    1.29016    0.07643  16.881  &lt; 2e-16 ***\nwithin_off_loading             0.23165    0.05461   4.242 2.22e-05 ***\nagegroupYA                    -0.34822    0.10548  -3.301 0.000963 ***\nwithin_off_loading:agegroupYA  0.33694    0.08180   4.119 3.81e-05 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nCorrelation of Fixed Effects:\n            (Intr) wthn__ aggrYA\nwthn_ff_ldn -0.084              \nagegroupYA  -0.714  0.081       \nwthn_ff_:YA  0.080 -0.606 -0.068"
+  },
+  {
+    "objectID": "index.html#plot-moderation",
+    "href": "index.html#plot-moderation",
+    "title": "ESM_project",
+    "section": "Plot moderation",
+    "text": "Plot moderation\n\n\nCode\ninteract_plot(int_mod, pred = within_off_loading, modx = agegroup)\n\n\n\n\n\n\n\n\n\nCode\n# # get the posterrior samples\n# draws&lt;-posterior_samples(fit1)\n# \n# # Compute indirect effect manually\n# draws$indirect &lt;- draws$b_withinoffloading_within_importance * # path a - M~A\n#   draws$b_esmeveningintentionexecution_within_off_loading  # path b - Y~M\n\n# # plot distribution\n# ggplot(draws, aes(x = indirect))+\n#   geom_histogram()+\n#   theme_classic()+\n#   gg_title(\"posterior distribution indirect effect of intention on PM\")\n\n#indirect_bf &lt;- bayesfactor_parameters(draws$indirect)\n\n#plot(bayesfactor_parameters(draws$indirect))\n\n# draws$indirect2 &lt;- draws$b_withintaskmonitoring_within_business*  draws$b_esmeveningintentionexecution_within_task_monitoring \n# \n# \n# hist(draws$indirect)\n# \n# hist(draws$indirect2)\n# \n# # simple slope analysis for the interaction between age group and within task monitoring\n# slope_MA &lt;- draws$b_esmeveningintentionexecution_within_off_loading  +\n#   draws$`b_esmeveningintentionexecution_agegroup.c:within_off_loading` * 0.5\n# slope_YA &lt;- draws$b_esmeveningintentionexecution_within_off_loading  +\n#   draws$`b_esmeveningintentionexecution_agegroup.c:within_off_loading`  -0.5+0.5\n# \n# describe_posterior(slope_MA)\n# describe_posterior(slope_YA)\n# \n# conditional_effects(fit1, \"within_off_loading\", resp = \"esmeveningintentionexecution\")\n# \n# ce &lt;- conditional_effects(fit1, effects = \"within_off_loading:agegroup.c\",\n#                           conditions = data.frame(agegroup.c = c(-0., 0.52)))\n# \n# plot(ce)\n\n# stronger in young adults than in middle aged adults"
+  },
+  {
+    "objectID": "index.html#posterior-predictive-check",
+    "href": "index.html#posterior-predictive-check",
+    "title": "ESM_project",
+    "section": "Posterior predictive check",
+    "text": "Posterior predictive check\nPPC constructs the posterior distribution over the parameters and simulate their distribution - if it approximates the distribution of observed data, the model is a good fit\nProspective memory\n\n\nCode\npp_check(fit1, resp = \"esmeveningintentionexecution\")\n\n\nUsing 10 posterior draws for ppc type 'dens_overlay' by default."
+  },
+  {
+    "objectID": "index.html#posterior-predictive-check-1",
+    "href": "index.html#posterior-predictive-check-1",
+    "title": "ESM_project",
+    "section": "Posterior predictive check",
+    "text": "Posterior predictive check\nTask Monitoring\n\n\nCode\npp_check(fit1, resp = \"esmdaytaskmonitoring\")\n\n\nUsing 10 posterior draws for ppc type 'dens_overlay' by default."
+  },
+  {
+    "objectID": "index.html#posterior-predictive-check-2",
+    "href": "index.html#posterior-predictive-check-2",
+    "title": "ESM_project",
+    "section": "Posterior predictive check",
+    "text": "Posterior predictive check\nOff Loading\n\n\nCode\npp_check(fit1, resp = \"esmeveningoffloadingr\")\n\n\nUsing 10 posterior draws for ppc type 'dens_overlay' by default."
+  }
+]
